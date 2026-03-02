@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para Ti 💌</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ffd6e8,#ffeef5);
+    overflow:hidden;
+    font-family:'Quicksand',sans-serif;
+}
+
+/* SOBRE */
+.sobre{
+    position:relative;
+    width:320px;
+    height:220px;
+    background:#ff8fb1;
+    border-radius:10px;
+    cursor:pointer;
+    box-shadow:0 20px 40px rgba(0,0,0,0.2);
+}
+
+.tapa{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#ff6f9f;
+    clip-path:polygon(0 0,100% 0,50% 60%);
+    transform-origin:top;
+    transition:1s;
+}
+
+.carta{
+    position:absolute;
+    width:90%;
+    height:90%;
+    background:#fffdf7;
+    top:5%;
+    left:5%;
+    border-radius:10px;
+    padding:20px;
+    box-sizing:border-box;
+    transform:translateY(100%);
+    transition:1s;
+    overflow:auto;
+}
+
+.abierto .tapa{
+    transform:rotateX(180deg);
+}
+
+.abierto .carta{
+    transform:translateY(0);
+}
+
+h1{
+    font-family:'Caveat',cursive;
+    font-size:36px;
+    text-align:center;
+    margin-top:10px;
+}
+
+.opcion{
+    display:flex;
+    align-items:center;
+    font-size:22px;
+    margin:15px 0;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.checkbox{
+    width:22px;
+    height:22px;
+    border:2px solid black;
+    margin-right:12px;
+    position:relative;
+}
+
+.checkbox.checked::after{
+    content:"✔";
+    position:absolute;
+    left:2px;
+    top:-5px;
+    font-size:22px;
+    color:#ff4d88;
+    animation:pop 0.3s ease;
+}
+
+@keyframes pop{
+    0%{transform:scale(0);}
+    100%{transform:scale(1);}
+}
+
+.texto-largo{
+    font-size:10px;
+    margin-top:10px;
+}
+
+#final{
+    display:none;
+    text-align:center;
+    font-family:'Caveat',cursive;
+    font-size:28px;
+    margin-top:15px;
+    color:#c2185b;
+    animation:fade 1s forwards;
+}
+
+@keyframes fade{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+/* CORAZONES */
+.corazon{
+    position:fixed;
+    top:-10px;
+    font-size:20px;
+    animation:caer linear forwards;
+}
+
+@keyframes caer{
+    to{
+        transform:translateY(100vh);
+        opacity:0;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="sobre" onclick="abrirSobre()">
+    <div class="tapa"></div>
+    <div class="carta" onclick="event.stopPropagation()">
+        <h1>Me gustas 💖<br>¿Te gusto?</h1>
+
+        <div class="opcion" onclick="aceptar(this)">
+            <div class="checkbox"></div>
+            Sí
+        </div>
+
+        <div class="opcion" onclick="aceptar(this)">
+            <div class="checkbox"></div>
+            Definitivamente
+        </div>
+
+        <div class="opcion" id="noOpcion" onclick="encoger(this)">
+            <div class="checkbox"></div>
+        </div>
+
+        <div class="texto-largo">
+        A ver... emocionalmente no estoy preparado, he vivido cosas, traumas del multiverso,
+        alineaciones cósmicas y crisis existenciales que me impiden aceptar esta oportunidad
+        romántica perfecta que claramente debería aceptar pero no aceptaré porque soy dramático...
+        </div>
+
+        <div id="final">
+            💌 Sabía que dirías que sí...  
+            Gracias por elegirme.  
+            Te amo infinito 💕
+        </div>
+
+    </div>
+</div>
+
+<audio autoplay loop>
+    <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let abierto=false;
+let escalaNo=1;
+
+function abrirSobre(){
+    if(!abierto){
+        document.querySelector(".sobre").classList.add("abierto");
+        abierto=true;
+    }
+}
+
+function aceptar(elemento){
+    document.querySelectorAll(".checkbox").forEach(c=>c.classList.remove("checked"));
+    elemento.querySelector(".checkbox").classList.add("checked");
+    document.getElementById("final").style.display="block";
+}
+
+function encoger(el){
+    escalaNo-=0.1;
+    if(escalaNo<0.3) escalaNo=0.3;
+    el.style.transform="scale("+escalaNo+")";
+}
+
+function crearCorazon(){
+    const corazon=document.createElement("div");
+    corazon.classList.add("corazon");
+    corazon.innerHTML="💗";
+    corazon.style.left=Math.random()*window.innerWidth+"px";
+    corazon.style.animationDuration=(Math.random()*3+2)+"s";
+    document.body.appendChild(corazon);
+    setTimeout(()=>{corazon.remove();},5000);
+}
+
+setInterval(crearCorazon,500);
+</script>
+
+</body>
+</html>
