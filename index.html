@@ -2,55 +2,82 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Para Ti 💌</title>
+<title>Para Ti 💖</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Parisienne&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
 
 <style>
+*{box-sizing:border-box;}
+
 body{
     margin:0;
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#ffd6e8,#ffeef5);
+    background: radial-gradient(circle at top, #ffe6f0, #ffd6e8 60%, #ffc2dc);
+    font-family:'Montserrat',sans-serif;
     overflow:hidden;
-    font-family:'Quicksand',sans-serif;
+}
+
+/* BRILLO SUAVE DE FONDO */
+body::before{
+    content:"";
+    position:absolute;
+    width:200%;
+    height:200%;
+    background:radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px);
+    background-size:40px 40px;
+    animation:moverFondo 40s linear infinite;
+    opacity:0.3;
+}
+
+@keyframes moverFondo{
+    from{transform:translate(0,0);}
+    to{transform:translate(-200px,-200px);}
 }
 
 /* SOBRE */
 .sobre{
     position:relative;
-    width:320px;
-    height:220px;
-    background:#ff8fb1;
-    border-radius:10px;
+    width:350px;
+    height:240px;
     cursor:pointer;
-    box-shadow:0 20px 40px rgba(0,0,0,0.2);
+    transition:0.5s;
+}
+
+.base{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#fff;
+    border-radius:15px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.15);
 }
 
 .tapa{
     position:absolute;
     width:100%;
     height:100%;
-    background:#ff6f9f;
+    background:linear-gradient(135deg,#ff8fb1,#ff5c8a);
     clip-path:polygon(0 0,100% 0,50% 60%);
+    border-radius:15px;
     transform-origin:top;
-    transition:1s;
+    transition:1s ease;
 }
 
 .carta{
     position:absolute;
     width:90%;
-    height:90%;
-    background:#fffdf7;
-    top:5%;
+    height:85%;
+    background:#fffafc;
+    top:8%;
     left:5%;
-    border-radius:10px;
+    border-radius:12px;
     padding:20px;
-    box-sizing:border-box;
-    transform:translateY(100%);
-    transition:1s;
+    transform:translateY(120%);
+    transition:1s ease;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
     overflow:auto;
 }
 
@@ -62,61 +89,70 @@ body{
     transform:translateY(0);
 }
 
+/* TEXTO */
 h1{
-    font-family:'Caveat',cursive;
-    font-size:36px;
+    font-family:'Parisienne',cursive;
+    font-size:34px;
     text-align:center;
-    margin-top:10px;
+    margin:5px 0 15px;
+    color:#c2185b;
 }
 
 .opcion{
     display:flex;
     align-items:center;
-    font-size:22px;
-    margin:15px 0;
+    margin:12px 0;
+    font-size:18px;
     cursor:pointer;
     transition:0.3s;
 }
 
+.opcion:hover{
+    transform:scale(1.05);
+}
+
 .checkbox{
-    width:22px;
-    height:22px;
-    border:2px solid black;
-    margin-right:12px;
+    width:20px;
+    height:20px;
+    border:2px solid #c2185b;
+    margin-right:10px;
+    border-radius:4px;
     position:relative;
 }
 
 .checkbox.checked::after{
     content:"✔";
     position:absolute;
-    left:2px;
     top:-5px;
-    font-size:22px;
+    left:2px;
     color:#ff4d88;
+    font-size:20px;
     animation:pop 0.3s ease;
 }
 
 @keyframes pop{
-    0%{transform:scale(0);}
-    100%{transform:scale(1);}
+    from{transform:scale(0);}
+    to{transform:scale(1);}
 }
 
 .texto-largo{
-    font-size:10px;
-    margin-top:10px;
+    font-size:9px;
+    opacity:0.7;
+    margin-top:8px;
+    line-height:1.2;
 }
 
 #final{
     display:none;
-    text-align:center;
-    font-family:'Caveat',cursive;
-    font-size:28px;
     margin-top:15px;
+    text-align:center;
+    font-family:'Parisienne',cursive;
+    font-size:24px;
     color:#c2185b;
-    animation:fade 1s forwards;
+    animation:fadeIn 1s forwards;
 }
 
-@keyframes fade{
+@keyframes fadeIn{
     from{opacity:0;}
     to{opacity:1;}
 }
@@ -125,7 +161,7 @@ h1{
 .corazon{
     position:fixed;
     top:-10px;
-    font-size:20px;
+    font-size:18px;
     animation:caer linear forwards;
 }
 
@@ -140,7 +176,9 @@ h1{
 <body>
 
 <div class="sobre" onclick="abrirSobre()">
+    <div class="base"></div>
     <div class="tapa"></div>
+
     <div class="carta" onclick="event.stopPropagation()">
         <h1>Me gustas 💖<br>¿Te gusto?</h1>
 
@@ -154,14 +192,13 @@ h1{
             Definitivamente
         </div>
 
-        <div class="opcion" id="noOpcion" onclick="encoger(this)">
+        <div class="opcion" id="noBtn" onclick="encoger(this)">
             <div class="checkbox"></div>
         </div>
 
         <div class="texto-largo">
-        A ver... emocionalmente no estoy preparado, he vivido cosas, traumas del multiverso,
-        alineaciones cósmicas y crisis existenciales que me impiden aceptar esta oportunidad
-        romántica perfecta que claramente debería aceptar pero no aceptaré porque soy dramático...
+        La verdad es que emocionalmente no estoy preparado, los planetas no están alineados,
+        el multiverso está inestable y tengo crisis existenciales nivel dios...
         </div>
 
         <div id="final">
@@ -169,12 +206,11 @@ h1{
             Gracias por elegirme.  
             Te amo infinito 💕
         </div>
-
     </div>
 </div>
 
 <audio autoplay loop>
-    <source src="musica.mp3" type="audio/mpeg">
+<source src="musica.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -188,29 +224,29 @@ function abrirSobre(){
     }
 }
 
-function aceptar(elemento){
+function aceptar(el){
     document.querySelectorAll(".checkbox").forEach(c=>c.classList.remove("checked"));
-    elemento.querySelector(".checkbox").classList.add("checked");
+    el.querySelector(".checkbox").classList.add("checked");
     document.getElementById("final").style.display="block";
 }
 
 function encoger(el){
     escalaNo-=0.1;
-    if(escalaNo<0.3) escalaNo=0.3;
+    if(escalaNo<0.4) escalaNo=0.4;
     el.style.transform="scale("+escalaNo+")";
 }
 
 function crearCorazon(){
     const corazon=document.createElement("div");
     corazon.classList.add("corazon");
-    corazon.innerHTML="💗";
+    corazon.innerHTML="💖";
     corazon.style.left=Math.random()*window.innerWidth+"px";
-    corazon.style.animationDuration=(Math.random()*3+2)+"s";
+    corazon.style.animationDuration=(Math.random()*3+3)+"s";
     document.body.appendChild(corazon);
-    setTimeout(()=>{corazon.remove();},5000);
+    setTimeout(()=>{corazon.remove();},6000);
 }
 
-setInterval(crearCorazon,500);
+setInterval(crearCorazon,700);
 </script>
 
 </body>
